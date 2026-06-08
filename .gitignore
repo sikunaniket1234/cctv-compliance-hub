@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Local Configurations & Secrets
+.env
+.env.local
+
+# Database files
+*.sqlite
+*.db
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Executables & Binaries
+*.exe
+mediamtx/mediamtx.exe
+mediamtx/mediamtx
+
+# SSL Certificates
+mediamtx/auto.crt
+mediamtx/auto.key
+
+# Local Test & Utility Scripts
+backend/db_check.js
+backend/digestParserTest.js
+backend/loginAndTest.js
+backend/probe*.js
+backend/rtsp*.js
+backend/tcpTest.js
+backend/test*.js
+
+# Local Planning & Markdown Guides
+NO_IP_GUIDE.md
+PRICING_STRATEGY.md
+CCTV_DEPLOYMENT_GUIDE.md
+prd.txt
