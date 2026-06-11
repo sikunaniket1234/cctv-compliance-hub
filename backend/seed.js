@@ -20,7 +20,7 @@ const encryptText = (value) => {
 async function seed() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
 
     const [adminOrg, adminCreated] = await Organization.findOrCreate({
       where: { email: 'admin@cctv.com' },
@@ -81,6 +81,7 @@ async function seed() {
         city: 'Sample City',
         state: 'Sample State',
         pincode: '123456',
+        heartbeat_id: 'BaneswarOldAgeHome',
       },
       {
         location_name: 'Boys Hostel',

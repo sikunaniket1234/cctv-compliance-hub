@@ -123,6 +123,8 @@ const buildRtspUrl = ({ connection_method, rtsp_url, host, port, username, passw
   throw new Error('Unsupported connection method');
 };
 
+exports.buildRtspUrl = buildRtspUrl;
+
 const testConnection = async (rtspUrl, username, password) => {
   const target = parseRtspHost(rtspUrl);
   if (!target) {

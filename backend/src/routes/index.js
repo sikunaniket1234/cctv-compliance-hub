@@ -4,10 +4,12 @@ const authController = require('../controllers/authController');
 const organizationController = require('../controllers/organizationController');
 const locationController = require('../controllers/locationController');
 const cameraController = require('../controllers/cameraController');
+const heartbeatController = require('../controllers/heartbeatController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/auth/register', authController.register);
 router.post('/auth/login', authController.login);
+router.post('/heartbeat', heartbeatController.processHeartbeat);
 
 router.get('/organizations', authMiddleware, organizationController.listOrganizations);
 router.get('/organizations/:id', authMiddleware, organizationController.getOrganization);

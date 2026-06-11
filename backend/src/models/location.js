@@ -32,6 +32,10 @@ const Location = sequelize.define('Location', {
     type: DataTypes.STRING(32),
     allowNull: false,
   },
+  heartbeat_id: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
 });
 
 Location.belongsTo(Organization, { foreignKey: 'organization_id' });
