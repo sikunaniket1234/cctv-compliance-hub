@@ -71,6 +71,7 @@ void sendHeartbeat() {
   // Set headers
   http.addHeader("Content-Type", "application/json");
   http.addHeader("X-Token", AUTH_TOKEN);
+  http.addHeader("bypass-tunnel-reminder", "true");
 
   Serial.println("Sending heartbeat POST request...");
   int httpCode = http.POST(payload);
