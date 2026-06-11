@@ -7,9 +7,10 @@ const char* WIFI_SSID     = "Anayak 4G";
 const char* WIFI_PASSWORD = "Anikety@1234";
 
 // Backend API Configuration
-// For local testing, replace this with your ngrok HTTPS URL (e.g. "https://xxxx.ngrok-free.app/api/heartbeat")
-// For production, use your VPS domain (e.g. "https://cctv.yourbrand.com/api/heartbeat")
-const char* SERVER_URL    = "YOUR_SERVER_URL_HERE/api/heartbeat";
+// 1. For direct local testing on the same Wi-Fi:
+const char* SERVER_URL    = "http://192.168.29.176:4000/api/heartbeat";
+// 2. For remote/public testing (using ngrok):
+// const char* SERVER_URL    = "https://xxxx.ngrok-free.app/api/heartbeat";
 const char* AUTH_TOKEN    = "my-secret-123";
 
 // Heartbeat Interval: 60 seconds (60000 ms)
