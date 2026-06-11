@@ -3,7 +3,7 @@
 #include <ArduinoJson.h>   // Install via Library Manager: "ArduinoJson" by Benoit Blanchon
 
 // Wi-Fi Configuration
-const char* WIFI_SSID     = "Anayak 4G";
+const char* WIFI_SSID     = "ANayak4G";
 const char* WIFI_PASSWORD = "Aniket@1234";
 
 // Backend API Configuration
