@@ -8,9 +8,9 @@ const char* WIFI_PASSWORD = "Aniket@1234";
 
 // Backend API Configuration
 // 1. For direct local testing on the same Wi-Fi:
-const char* SERVER_URL    = "http://192.168.29.176:4000/api/heartbeat";
-// 2. For remote/public testing (using ngrok):
-// const char* SERVER_URL    = "https://xxxx.ngrok-free.app/api/heartbeat";
+// const char* SERVER_URL    = "http://192.168.29.176:4000/api/heartbeat";
+// 2. For remote/public testing (using localtunnel):
+const char* SERVER_URL    = "https://floppy-melons-heal.loca.lt/api/heartbeat";
 const char* AUTH_TOKEN    = "my-secret-123";
 
 // Heartbeat Interval: 60 seconds (60000 ms)
