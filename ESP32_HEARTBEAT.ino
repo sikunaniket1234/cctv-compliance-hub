@@ -4,7 +4,7 @@
 
 // Wi-Fi Configuration
 const char* WIFI_SSID     = "Anayak 4G";
-const char* WIFI_PASSWORD = "Anikety@1234";
+const char* WIFI_PASSWORD = "Aniket@1234";
 
 // Backend API Configuration
 // 1. For direct local testing on the same Wi-Fi:
@@ -18,13 +18,18 @@ const unsigned long INTERVAL_MS = 60000;
 unsigned long lastSentAt = 0;
 
 void connectWiFi() {
+  Serial.println("\nInitializing WiFi...");
+  WiFi.disconnect(true); // Reset connection state
+  delay(1000);
+  WiFi.mode(WIFI_STA);   // Set mode to station (client)
+  
   Serial.print("Connecting to WiFi: ");
   Serial.println(WIFI_SSID);
   
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   
   int attempts = 0;
-  while (WiFi.status() != WL_CONNECTED && attempts < 20) {
+  while (WiFi.status() != WL_CONNECTED && attempts < 30) { // Increased to 30 attempts (15 seconds)
     delay(500);
     Serial.print(".");
     attempts++;
