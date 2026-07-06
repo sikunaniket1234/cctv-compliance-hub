@@ -70,6 +70,10 @@ const Camera = sequelize.define('Camera', {
     allowNull: true,
     unique: true,
   },
+  ipv6_interface_id: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
 });
 
 Camera.belongsTo(Location, { foreignKey: 'location_id' });

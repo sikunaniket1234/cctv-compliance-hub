@@ -3,9 +3,32 @@ const Camera = require('../models/camera');
 const mediamtxService = require('../services/mediamtxService');
 const { decryptText, encryptText, buildRtspUrl } = require('./cameraController');
 
+function combineIpv6(prefix, interfaceId) {
+  if (!prefix || !interfaceId) return null;
+  
+  let cleanPrefix = prefix.trim();
+  if (cleanPrefix.endsWith('::')) {
+    cleanPrefix = cleanPrefix.slice(0, -2);
+  } else if (cleanPrefix.endsWith(':')) {
+    cleanPrefix = cleanPrefix.slice(0, -1);
+  }
+  
+  let cleanInterface = interfaceId.trim();
+  if (cleanInterface.startsWith('::')) {
+    cleanInterface = cleanInterface.slice(2);
+  } else if (cleanInterface.startsWith(':')) {
+    cleanInterface = cleanInterface.slice(1);
+  }
+  
+  const segments = cleanPrefix.split(':');
+  const prefix64 = segments.slice(0, 4).join(':');
+  
+  return `${prefix64}:${cleanInterface}`;
+}
+
 exports.processHeartbeat = async (req, res) => {
   try {
-    const { device_id } = req.body;
+    const { device_id, ipv6_prefix } = req.body;
 
     if (!device_id) {
       return res.status(400).json({ error: 'device_id is required' });
@@ -38,7 +61,7 @@ exports.processHeartbeat = async (req, res) => {
       clientIp = '127.0.0.1';
     }
 
-    console.log(`Heartbeat received from device "${device_id}". Extracted IP: ${clientIp}`);
+    console.log(`Heartbeat received from device "${device_id}". Extracted IP: ${clientIp}, IPv6 Prefix: ${ipv6_prefix || 'none'}`);
 
     // 3. Find Location associated with device_id
     const location = await Location.findOne({ where: { heartbeat_id: device_id } });
@@ -54,8 +77,17 @@ exports.processHeartbeat = async (req, res) => {
     let updatedCount = 0;
 
     for (const camera of cameras) {
-      if (camera.host !== clientIp) {
-        console.log(`Updating camera ${camera.id} (${camera.camera_name}) host from ${camera.host} to ${clientIp}`);
+      // Determine target host: IPv6 address constructed via prefix, or fallback to detected client IP
+      let targetHost = clientIp;
+      if (ipv6_prefix && camera.ipv6_interface_id) {
+        const ipv6Host = combineIpv6(ipv6_prefix, camera.ipv6_interface_id);
+        if (ipv6Host) {
+          targetHost = ipv6Host;
+        }
+      }
+
+      if (camera.host !== targetHost) {
+        console.log(`Updating camera ${camera.id} (${camera.camera_name}) host from ${camera.host} to ${targetHost}`);
 
         const username = decryptText(camera.encrypted_username);
         const password = decryptText(camera.encrypted_password);
@@ -64,7 +96,7 @@ exports.processHeartbeat = async (req, res) => {
         const newRtspUrl = buildRtspUrl({
           connection_method: camera.connection_method,
           rtsp_url: camera.rtsp_url,
-          host: clientIp,
+          host: targetHost,
           port: camera.port,
           username,
           password,
@@ -73,7 +105,7 @@ exports.processHeartbeat = async (req, res) => {
         });
 
         // Save new values to database
-        camera.host = clientIp;
+        camera.host = targetHost;
         camera.encrypted_rtsp = encryptText(newRtspUrl);
         await camera.save();
 
@@ -96,6 +128,7 @@ exports.processHeartbeat = async (req, res) => {
       status: 'success',
       device_id,
       detected_ip: clientIp,
+      detected_ipv6_prefix: ipv6_prefix || null,
       location_name: location.location_name,
       cameras_checked: cameras.length,
       cameras_updated: updatedCount,
