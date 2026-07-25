@@ -136,6 +136,7 @@ async function seed() {
         encrypted_rtsp: encryptText('rtsp://admin:abcd1234@192.168.29.39:554/cam/realmonitor?channel=1&subtype=0'),
         encrypted_username: encryptText('admin'),
         encrypted_password: encryptText('abcd1234'),
+        stream_key: crypto.randomBytes(12).toString('hex'),
         stream_status: 'seeded',
         is_public: false,
       },

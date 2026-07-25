@@ -41,9 +41,7 @@ function Sidebar() {
         <NavLink to="/cameras" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <span className="link-icon">🎥</span> Surveillance Cameras
         </NavLink>
-        <NavLink to="/guide" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-          <span className="link-icon">📖</span> Deployment Guide
-        </NavLink>
+
       </nav>
 
       <div className="sidebar-footer">
