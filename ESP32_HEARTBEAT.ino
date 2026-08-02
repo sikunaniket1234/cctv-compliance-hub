@@ -9,8 +9,8 @@ const char* WIFI_PASSWORD = "Aniket@1234";
 // Backend API Configuration
 // 1. For direct local testing on the same Wi-Fi:
 // const char* SERVER_URL    = "http://192.168.29.176:4000/api/heartbeat";
-// 2. For remote/public testing (using serveo):
-const char* SERVER_URL    = "https://88b61d8f4a1cf58d-49-37-116-218.serveousercontent.com/api/heartbeat";
+// 2. For remote/public production hosting:
+const char* SERVER_URL    = "http://200.141.11.15/api/heartbeat";
 const char* AUTH_TOKEN    = "my-secret-123";
 
 // Heartbeat Interval: 60 seconds (60000 ms)
