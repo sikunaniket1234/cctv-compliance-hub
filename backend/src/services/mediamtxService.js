@@ -13,7 +13,8 @@ const createStream = async ({ streamKey, rtspUrl }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         source: rtspUrl,
-        sourceOnDemand: true,
+        sourceOnDemand: false,
+        rtspTransport: 'tcp',
       }),
     });
     
