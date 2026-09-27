@@ -5,7 +5,7 @@ const MEDIAMTX_API_URL = process.env.MEDIAMTX_API_URL || 'http://localhost:9997'
 
 const createStream = async ({ streamKey, rtspUrl }) => {
   const streamId = `${MEDIAMTX_STREAM_PREFIX}${streamKey}`;
-  const viewerUrl = `${MEDIAMTX_PUBLIC_URL}/${streamId}`;
+  const viewerUrl = `${MEDIAMTX_PUBLIC_URL}/${streamId}/`;
 
   try {
     const response = await fetch(`${MEDIAMTX_API_URL}/v3/config/paths/add/${streamId}`, {
